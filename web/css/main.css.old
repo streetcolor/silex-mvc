@@ -1,0 +1,38 @@
+.bodyblue
+{
+     background-color: #428BCA;
+     margin : 0px;
+     padding : 0px;
+}
+
+
+.mb15 {
+    margin-bottom: 15px;
+}
+
+.panel-body{
+    padding: 40px;
+}
+
+.panel-signin{
+    width: 400px;
+
+}
+
+.panel-signin, .panel-signup{
+    margin: 80px auto 0px;
+}
+
+.forget_connect{
+    text-align : right;
+    cursor:  pointer;
+
+}
+
+@media screen and (max-width: 500px){
+
+    .panel-signin
+    {
+        width: 300px;
+    }
+}
