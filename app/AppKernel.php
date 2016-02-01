@@ -78,5 +78,6 @@ class AppKernel extends Application
     private function registerBundles(){
        
         new Component\DefaultBundle\DefaultBundle($this, '/test');
+        new Component\KikiBundle\KikiBundle($this, '/kiki');
     }
 }

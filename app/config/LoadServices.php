@@ -11,6 +11,7 @@ use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
+use Silex\Provider\SecurityServiceProvider;
 
 /**
  * Base Config class.
@@ -114,30 +115,49 @@ class LoadServices
         $this->app->register(new \Core\Provider\TwigServiceProviderExtension());
 
         /**
-         * Translation
-         *
-         * @note Silex Native
-         * @doc http://silex.sensiolabs.org/doc/providers/translation.html
-         */
+        * Translation
+        *
+        * @note Silex Native
+        * @doc http://silex.sensiolabs.org/doc/providers/translation.html
+        */
         $this->app->register(new TranslationServiceProvider(), array(
             'locale_fallbacks' => array('fr')
         ));
 
         /**
-         * Translation Extension
-         *
-         * @note Custom Provider
-         * @doc todo
-         */
+        * Translation Extension
+        *
+        * @note Custom Provider
+        * @doc todo
+        */
         $this->app->register(new \Core\Provider\TranslationServiceProviderExtension());
 
         /**
-         * Fragment Provider
-         *
-         * @note Silex Native
-         * @doc http://silex.sensiolabs.org/doc/providers/http_fragment.html
-         */
+        * Fragment Provider
+        *
+        * @note Silex Native
+        * @doc http://silex.sensiolabs.org/doc/providers/http_fragment.html
+        */
         $this->app->register(new HttpFragmentServiceProvider());
+
+        /**
+        * Security Provider
+        *
+        * @note Silex Native
+        * @doc http://silex.sensiolabs.org/doc/providers/security.html
+        */
+        $this->app->register(new SecurityServiceProvider(), array(
+            'security.firewalls'=>array(
+                'sebastien' => array(
+                    'pattern' => '^/test',
+                    'http' => true,
+                    'users' => $this->app->share(function () {
+                       return new \config\UserProvider();
+                    }),
+                ),
+            )
+        ));
+
 
     }
 }
