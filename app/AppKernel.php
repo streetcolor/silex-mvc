@@ -77,7 +77,7 @@ class AppKernel extends Application
 
     private function registerBundles(){
        
-        new Component\DefaultBundle\DefaultBundle($this, '/test');
-        new Component\KikiBundle\KikiBundle($this, '/kiki');
+        new Component\DefaultBundle\DefaultBundle($this, '/default');
+        new Component\UserBundle\UserBundle($this, '/user');
     }
 }

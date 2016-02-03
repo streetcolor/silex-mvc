@@ -10,8 +10,9 @@ use Silex\Application;
 class Controller
 {
 	protected $app;
-
+	protected $request;
 	public function __construct(\AppKernel $app){
 		$this->app = $app;
+		$this->request = $this->app['request'];
 	}
 }

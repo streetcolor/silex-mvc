@@ -29,11 +29,11 @@ class InjectionEvent implements ServiceProviderInterface
     public function boot(Application $app)
     {
         $app->before(function(Request $request, Application $app) {
-            echo "Before injector Event<hr>";
+            //echo "Before injector Event<hr>";
         });
 
         $app->after(function (Request $request, Response $response) {
-            echo "After injector Event <hr>";
+            //echo "After injector Event <hr>";
         });
     }
 }

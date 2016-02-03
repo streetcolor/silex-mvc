@@ -8,8 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
     $vendorDir . '/paragonie/random_compat/lib/random.php',
-    $vendorDir . '/symfony/polyfill-php56/bootstrap.php',
     $vendorDir . '/symfony/polyfill-php70/bootstrap.php',
-    $vendorDir . '/ircmaxell/password-compat/lib/password.php',
-    $vendorDir . '/symfony/polyfill-php55/bootstrap.php',
+    $vendorDir . '/symfony/polyfill-php56/bootstrap.php',
 );

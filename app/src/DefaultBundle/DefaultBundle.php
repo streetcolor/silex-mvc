@@ -32,19 +32,22 @@ class DefaultBundle implements
      */
     public function register(Application $app)
     {
-        /*Mount all services here*/
-
+        /*Mount all events here*/
         $events = [
                         new \Component\DefaultBundle\Services\EventServiceProvider
                     ];
-                    
-        $app->register(new \Core\InjectionEvent($events));
-
+        if(count($events)){
+             $app->register(new \Core\InjectionEvent($events));
+        }   
+       
+       /*Mount all services here*/
         $services = [
                         new \Component\DefaultBundle\Services\AcmeServiceProvider,
                     ];
 
-        $app->register(new \Core\InjectionService($services));
+        if(count($services)){
+            $app->register(new \Core\InjectionService($services));    
+        }
 
         $app['default.controller'] = $app->share(function() use ($app) {
             return new Controller\DefaultController($app);
@@ -61,8 +64,18 @@ class DefaultBundle implements
         $controllers = $app['controllers_factory'];
 
         $controllers
-            ->get('/{name}', 'default.controller:getIndex')
-            ->bind('gallery_index')
+            ->get('/', 'default.controller:getLogin')
+            ->bind('default')
+        ;
+
+        $controllers
+            ->get('/login', 'default.controller:getLogin')
+            ->bind('default_login')
+        ;
+
+        $controllers
+            ->get('/success', 'default.controller:getSuccess')
+            ->bind('default_success')
         ;
         
         return $controllers;
@@ -70,12 +83,5 @@ class DefaultBundle implements
 
     public function boot(Application $app)
     {
-        $app->before(function(Request $request, Application $app) {
-           // echo "Before injector Event<hr>";
-        });
-
-        $app->after(function (Request $request, Response $response) {
-           // echo "After injector Event <hr>";
-        });
     }
 }

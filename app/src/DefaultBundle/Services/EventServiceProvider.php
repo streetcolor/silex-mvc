@@ -22,11 +22,11 @@ class EventServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         $app->before(function(Request $request, Application $app) {
-            echo "Before Service Event<hr>";
+            //echo "Before Service Event<hr>";
         });
 
         $app->after(function (Request $request, Response $response) {
-            echo "After Service Event <hr>";
+            //echo "After Service Event <hr>";
         });
     }
 }

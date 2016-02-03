@@ -144,18 +144,25 @@ class LoadServices
         * Security Provider
         *
         * @note Silex Native
+        * @note Please to difined 
         * @doc http://silex.sensiolabs.org/doc/providers/security.html
         */
         $this->app->register(new SecurityServiceProvider(), array(
-            'security.firewalls'=>array(
-                'sebastien' => array(
-                    'pattern' => '^/test',
-                    'http' => true,
-                    'users' => $this->app->share(function () {
-                       return new \config\UserProvider();
-                    }),
+            'security.firewalls' => array(
+                'foo' => array('pattern' => '^/foo'), // Exemple d'une url accessible en mode non connecté
+                'default' => array(
+                    'pattern' => '^.*$',
+                    'anonymous' => true, // Indispensable car la zone de login se trouve dans la zone sécurisée (tout le front-office)
+                    'form' => array('login_path' => '/login', 'check_path' => 'connexion'),
+                    'logout' => array('logout_path' => '/deconnexion'), // url à appeler pour se déconnecter
+                    'users' =>  $this->app['user.provider'],
+                    // 'users' => $this->app->share(function() {
+                    //     // La classe App\User\UserProvider est spécifique à notre application et est décrite plus bas
+                    //     return new \Core\UserProvider;
+                    // }),
                 ),
-            )
+            ),
+    
         ));
 
 
