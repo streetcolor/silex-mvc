@@ -20,6 +20,9 @@ class UserServiceProvider implements ServiceProviderInterface, UserProviderInter
 {
     public function register(Application $app)
     {
+        $app['user.login_path']            = '/user/login';
+        $app['user.default_target_path']   = '/user/success';
+        $app['user.logout_path']           = '/deconnexion';
         $app['user.provider'] = $app->share(function() use ($app) {
             return $this;
         });

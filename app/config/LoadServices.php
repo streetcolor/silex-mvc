@@ -144,24 +144,27 @@ class LoadServices
         * Security Provider
         *
         * @note Silex Native
-        * @note Please to difined 
+        * @note Please to define user.provider 
         * @doc http://silex.sensiolabs.org/doc/providers/security.html
         */
         $this->app->register(new SecurityServiceProvider(), array(
             'security.firewalls' => array(
-                'foo' => array('pattern' => '^/foo'), // Exemple d'une url accessible en mode non connecté
-                'default' => array(
+                'secured' => array(
                     'pattern' => '^.*$',
                     'anonymous' => true, // Indispensable car la zone de login se trouve dans la zone sécurisée (tout le front-office)
-                    'form' => array('login_path' => '/login', 'check_path' => 'connexion'),
-                    'logout' => array('logout_path' => '/deconnexion'), // url à appeler pour se déconnecter
+                    'form' => array(
+                            'login_path' => $this->app['user.login_path'], 
+                            'check_path' => 'connexion',
+                            'default_target_path' => $this->app['user.default_target_path']),
+                    'logout' => array('logout_path' => $this->app['user.logout_path']), // url à appeler pour se déconnecter
                     'users' =>  $this->app['user.provider'],
-                    // 'users' => $this->app->share(function() {
-                    //     // La classe App\User\UserProvider est spécifique à notre application et est décrite plus bas
-                    //     return new \Core\UserProvider;
-                    // }),
                 ),
             ),
+            'security.access_rules' => array(
+                // ROLE_USER est défini arbitrairement, vous pouvez le remplacer par le nom que vous voulez
+                array('^/user/success', 'ROLE_USER'),
+                array('^/foo$', ''), // Cette url est accessible en mode non connecté
+            )
     
         ));
 
