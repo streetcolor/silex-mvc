@@ -1,0 +1,242 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Test Hello World
+{% endblock %}
+
+{% block content %}
+
+
+    {% include 'AccountBundle/View/components/header.twig' %}
+
+
+    <section id="medicine">
+
+        <!-- CONTAINER -->
+        <!-- COLOR OVER IMAGE -->
+        <div class="container color-overlay"> <!-- To make header full screen. Use .full-screen class with color overlay. Example: <div class="color-overlay full-screen">  -->
+        
+            <div class="row">
+                
+                <div class="col-md-8 col-md-offset-2">
+                    
+                    <!-- HEADING AND BUTTONS -->
+                    <div class="intro-section">
+                        
+                        <!-- WELCOM MESSAGE -->
+                        <h1 class="intro">Votre liste de médicaments</h1>
+                        <h5 class="hidden-xs">Tapez les premiere lettre de votre médicament et valider avec la touche entrée</h5>
+                            
+                        
+                        </form>
+                    
+                        <ul>
+                          {% for medicine in medicines %}
+                              <li>
+                                  <div class="item">
+                                    <p>
+                                      {{ medicine.getMedicine().getName() }}
+                                    </p>
+                                  </div>
+                                  <i class="first">
+                                    <a class="icon_trash_alt remove" data-id="{{ medicine.getIdUserMedicine() }}" href="#"></a>
+                                  </i>
+                                  <i class="second">
+                                    <a class="icon_pencil-edit edit" data-id="{{ medicine.getIdUserMedicine() }}" href="{{ app.url_generator.generate('ajax_get_user_medicine', {id:medicine.getIdUserMedicine()})}}" data-put="{{ app.url_generator.generate('ajax_get_user_medicine', {id:medicine.getIdUserMedicine()})}}"></a>
+                                  </i>
+                              </li>
+                          {% endfor %}
+                        </ul>
+
+                    </div>
+                    <!-- /END HEADNING AND BUTTONS -->
+                    
+                </div>
+
+            </div>
+            <!-- /END ROW -->
+            
+        </div>
+        <!-- /END COLOR OVERLAY -->
+        <!-- /END CONTAINER -->
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <form class="modal-content" method="post" id="edit">
+          
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Informations complementaire</h4>
+          </div>
+          
+          <div class="modal-body">
+
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">Nombre de boites:</label>
+                <input type="text" class="form-control" name="number" id="number">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">Date de perenption:</label>
+                 <input type="text" class="form-control" name="expiration" id="expiration">
+              </div>
+            
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+
+    {% include 'HomeBundle/View/components/footer.twig' %}
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<script>
+$(function() {
+
+  function __get(e){
+    _element = $(this)
+
+    e.preventDefault();
+    $.ajax({
+      url: _element.attr('href'),
+      type: 'GET',
+      success: function(result) {
+         if(result.status == 'success'){
+            $data = result.data;
+           $('#myModal').modal('show') ;
+           $('#number').val($data.number);
+           if($data.expiration.date != '-0001-11-30 00:00:00.000000'){
+              $date = new Date($data.expiration.date);
+             var $month = $date.getMonth() + 1  // now moths are 1-12
+             if ($month<10) 
+                $month = '0'+$month
+
+              $date = $date.getFullYear()+'-'+$month+'-'+$date.getDate();
+           }
+          
+           $('#expiration').val($date);
+           $('#edit').attr('action', _element.data('put'));
+         }
+      }
+    });
+
+  }
+
+  function __edit(e){
+    _element = $(this);
+    e.preventDefault();
+    $.ajax({
+      url: _element.attr('action'),
+      type: 'PUT',
+      data:_element.serialize(),
+      success: function(result) {
+         if(result.status == 'success'){
+             $.growl.notice({ title: "Opération réussie", message: _element.text()+" vient d'être supprimé" });
+             $('#myModal').modal('hide') ;
+         }
+      }
+    });
+
+  }
+
+  function __remove(e){
+    e.preventDefault();
+    _element = $(this).closest('li');
+    _id = $(this).data('id');
+
+    $.ajax({
+      url: '{{ app.url_generator.generate('ajax_delete_medicine')}}',
+      type: 'DELETE',
+      data:{id_user_medicine:_id},
+      success: function(result) {
+         if(result.status == 'success'){
+            _element.remove()
+             $.growl.notice({ title: "Opération réussie", message: _element.text()+" vient d'être supprimé" });
+         }
+      }
+    }); 
+  }
+
+  $('#medicine').on('click', '.remove', __remove);
+  $('#medicine').on('click', '.edit', __get);
+
+  $('#edit').on('submit', __edit);
+
+  function __displayResult(item) {
+    $.post( 
+      "{{ app.url_generator.generate('ajax_post_medicine')}}", 
+      {id_medicine:item.value}, 
+      function() {
+
+        $html = '<li>';
+        $html += '<div class="item">';
+        $html += '<p>';
+        $html +=  item.text;
+        $html += '</p>';
+        $html += '</div>';
+        $html += '<i class="first">';
+        $html += '<a class="icon_trash_alt remove" data-id="'+item.value+'" href="#"></a>';
+        $html += '</i>';
+        $html += '<i class="second">';
+        $html += '<a class="icon_pencil-edit edit" data-id="'+item.value+'"></a>';
+        $html += '</i>';
+        $html += '</li>';
+
+        $('#medicine ul').prepend($html);
+        $.growl.notice({ title: "Opération réussie", message: item.text+" vient d'être enregsitré" });
+        $('#medicine').on('click', '.remove', __remove);
+    })
+    .fail(function() {})
+    .always(function() {});
+
+  }
+
+  $(".navbar-brand").click(function(e){
+    $('#search').show();
+    $(this).hide();
+    $('.navbar-toggle').hide();
+    $('.navbar-collapse').removeClass('in');
+
+  })
+
+  $(".icon_close_alt, .navbar-toggle").click(function(e){
+    $('#search').hide();
+    $(".navbar-brand, .navbar-toggle").show();
+
+  })
+
+  $('#search input').typeahead({
+    ajax: {
+        url: '{{ app.url_generator.generate('ajax_get_medicine')}}',
+        method: 'GET',
+        triggerLength: 3
+    },
+    onSelect: __displayResult,
+    displayField: 'name',
+    valueField: 'ID'
+  });
+
+
+  $('#expiration').datepicker({
+    format: "yyyy-mm-dd",
+    language: "fr",
+    orientation: "bottom left",
+    autoclose: true,
+    todayHighlight: true
+});
+
+});
+</script>
+
+{% endblock %}

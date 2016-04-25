@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Test Hello World
+{% endblock %}
+
+{% block content %}
+
+
+    {% include 'HomeBundle/View/components/header.twig' %}
+
+
+    <section id="home">
+
+        <!-- CONTAINER -->
+        <!-- COLOR OVER IMAGE -->
+        <div class="container color-overlay"> <!-- To make header full screen. Use .full-screen class with color overlay. Example: <div class="color-overlay full-screen">  -->
+        
+            <div class="row">
+                
+                <div class="col-md-8 col-md-offset-2">
+                    
+                    <!-- HEADING AND BUTTONS -->
+                    <div class="intro-section">
+                        
+                        <!-- WELCOM MESSAGE -->
+                        <h1 class="intro">Créer votre compte</h1>
+                        <h5>Available on App Store and Play Store</h5>
+                        
+                        <div class="contact-box">
+            
+                            <!-- EXPANDED CONTACT FORM -->
+                            <div class="row expanded-contact-form">
+                                
+                                <div class="col-md-8 col-md-offset-2">
+                                    
+                                    <!-- FORM -->
+                                    <form class="contact-form" id="contact" role="form" method="POST">
+                                        
+                                        <!-- IF MAIL SENT SUCCESSFULLY -->
+                                        <h4 class="success">
+                                            <i class="icon_check"></i> Your message has been sent successfully.
+                                        </h4>
+                                        
+                                        <!-- IF MAIL SENDING UNSUCCESSFULL -->
+                                        <h4 class="error">
+                                            <i class="icon_error-circle_alt"></i> E-mail must be valid and message must be longer than 1 character.
+                                        </h4>
+                                        
+                                        {% if errors_signin.firstname is defined %}
+                                            <div class="col-xs-12">
+                                                <div class="alert alert-danger margin-bottom-10" role="alert">
+                                                  <span class="sr-only">Error:</span>
+                                                  First Name : {{errors_signin.firstname}}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        {% if errors_signin.lastname is defined %}
+                                        <div class="col-xs-12">
+                                                <div class="alert alert-danger margin-bottom-0" role="alert">
+                                                  <span class="sr-only">Error:</span>
+                                                  Last Name : {{errors_signin.lastname}}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        <div class="col-md-6">
+                                            
+                                            <input class="form-control input-box"  type="text" name="lastname" placeholder="Nom">
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <input class="form-control input-box"  type="text" name="firstname" placeholder="Prenom">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            {% if errors_signin.username is defined %}
+                                                <div class="alert alert-danger margin-bottom-0" role="alert">
+                                                  <span class="sr-only">Error:</span>
+                                                  Email : {{errors_signin.username}}
+                                                </div>
+                                            {% endif %}
+                                            <input class="form-control input-box"  type="email" name="username" placeholder="Email">
+                                        </div>
+                                        
+                                        <div class="col-md-12">
+                                            {% if errors_signin.password is defined %}
+                                                <div class="alert alert-danger margin-bottom-0" role="alert">
+                                                  <span class="sr-only">Error:</span>
+                                                  Password : {{errors_signin.password}}
+                                                </div>
+                                            {% endif %}
+                                            <input class="form-control input-box"  type="password" name="password" placeholder="Mot de passe">
+                                        </div>
+                                        
+                                        <button class="btn btn-primary standard-button2 ladda-button" type="submit" id="submit" name="submit" data-style="expand-left">Créer votre compte</button>
+                                        
+                                    </form>
+                                    <!-- /END FORM -->
+                                    <form action="{{ path('connexion') }}" method="post">
+                                        {% if error_login %}
+                                            <div class="col-xs-12 margin-top-10 margin-bottom-10">
+                                                <div class="alert alert-danger margin-bottom-0" role="alert">
+                                                    {{ error_login }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        <div class="col-md-12">
+                                            <input class="form-control input-box"  type="email" name="_username" placeholder="Email" value="">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input class="form-control input-box"  type="password" name="_password" placeholder="Mot de passe">
+                                        </div>
+                                          <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                                            <label for="remember_me">Keep me logged in</label>
+                                        <button class="btn btn-primary standard-button2 ladda-button" type="submit" id="submit" name="submit" data-style="expand-left">Créer votre compte</button>
+
+                                    </form>
+                                    
+                                </div>
+                                
+                            </div>
+                            <!-- /END EXPANDED CONTACT FORM -->
+                            
+                        </div>
+                        <!-- /END BUTTONS -->
+                        
+                    </div>
+                    <!-- /END HEADNING AND BUTTONS -->
+                    
+                </div>
+
+            </div>
+            <!-- /END ROW -->
+            
+        </div>
+        <!-- /END COLOR OVERLAY -->
+        <!-- /END CONTAINER -->
+    </section>
+
+
+    {% include 'HomeBundle/View/components/footer.twig' %}
+
+
+{% endblock %}

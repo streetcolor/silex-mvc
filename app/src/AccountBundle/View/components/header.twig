@@ -1,0 +1,48 @@
+    
+<!-- =========================
+HEADER   
+============================== -->
+<header class="header">
+<!-- STICKY NAVIGATION -->
+        <div class="navbar navbar-inverse bs-docs-nav navbar-fixed-top sticky-navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    
+                    <!-- LOGO ON STICKY NAV BAR -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#kane-navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                        •••
+                    </button>
+
+                    <a class="navbar-brand" href="#"><i class="icon_search"></i></a>
+
+                    <form id="search" method="POST" role="form" class="pull-left none">
+
+                          <div class="col-md-12">
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><i class="icon_search"></i></span>
+                                <input autocomplete="off" class="form-control input-box"  type="text" name="name" placeholder="Commencer la recherche">
+                                <span class="input-group-addon"><i class="icon_close_alt"></i></span>
+                            </div>
+
+                          </div>
+
+                    </form>
+                            
+                </div>
+                
+                <!-- NAVIGATION LINKS -->
+                <div class="navbar-collapse collapse" id="kane-navigation">
+                    <ul class="nav navbar-nav navbar-right main-navigation">
+                        <li>
+                        
+                       </li>
+                       <li><a href="{{ path('deconnexion') }}">{{username}} | Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div> <!-- /END CONTAINER -->
+        </div> <!-- /END STICKY NAVIGATION -->
+
+    </header>
+        <!-- /END HEADER -->
