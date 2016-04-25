@@ -1,5 +1,5 @@
 <?php
-namespace Component\DefaultBundle\Services;
+namespace Src\DefaultBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;

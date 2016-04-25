@@ -1,5 +1,5 @@
 <?php
-namespace Component\UserBundle\Services;
+namespace Src\UserBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -17,12 +17,25 @@ class EventServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
+
     }
 
     public function boot(Application $app)
     {
         $app->before(function(Request $request, Application $app) {
-            //echo "Before Service Event<hr>";
+            
+            /**
+            * Validator constraint
+            *
+            * @note Overload constraints validator
+            * @doc http://silex.sensiolabs.org/doc/providers/validator.html
+             */
+            $app['validator.validator_service_ids'] =  isset($app['validator.validator_service_ids']) ? $app['validator.validator_service_ids'] : array();
+            $app['validator.validator_service_ids'] = array_merge(
+            $app['validator.validator_service_ids'],
+                array('validator.uniqueUser' => 'validator.constraint.uniqueUser')
+            );
+
         });
 
         $app->after(function (Request $request, Response $response) {

@@ -1,5 +1,5 @@
 <?php
-namespace Component\UserBundle;
+namespace Src\UserBundle;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -9,7 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Validator\Validation;
+use Silex\Provider\ValidatorServiceProvider;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 /**
  * Default Controller Provider
  *
@@ -31,11 +36,10 @@ class UserBundle implements
      * @return [type]           [description]
      */
     public function register(Application $app)
-    {
-        
+    {   
         /*Mount all events here*/
         $events = [
-                        new \Component\DefaultBundle\Services\EventServiceProvider
+                        new \Src\UserBundle\Services\EventServiceProvider
                     ];
         if(count($events)){
              $app->register(new \Core\InjectionEvent($events));
@@ -43,8 +47,9 @@ class UserBundle implements
        
        /*Mount all services here*/
         $services = [
-                        //new \Component\DefaultBundle\Services\AcmeServiceProvider,
-                        new \Component\UserBundle\Services\UserServiceProvider,
+                        new \Src\UserBundle\Services\OrmServiceProvider,
+                        new \Src\UserBundle\Services\UserServiceProvider,
+                        new \Src\UserBundle\Services\UserConstraintServiceProvider
                     ];
 
         if(count($services)){
@@ -66,20 +71,15 @@ class UserBundle implements
         $controllers = $app['controllers_factory'];
 
         $controllers
-            ->get('/', 'user.controller:getLogin')
-            ->bind('user')
+            ->get('/sign-up', 'user.controller:getSignUp')
+            ->bind('user_signup')
         ;
 
         $controllers
-            ->get('/login', 'user.controller:getLogin')
-            ->bind('user_login')
+            ->post('/sign-up', 'user.controller:getSignUp')
+            ->bind('user_signup_post')
         ;
-
-        $controllers
-            ->get('/success', 'user.controller:getSuccess')
-            ->bind('user_success')
-        ;
-        
+    
         return $controllers;
     }
 

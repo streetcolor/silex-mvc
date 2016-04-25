@@ -49,6 +49,7 @@ RESPONSIVE FIXES
         position: relative;
         text-align: center;
         margin-top: 10px;
+            background: #454545;
     }
     .sticky-navigation .navbar-header a {
         float: none !important;
@@ -233,5 +234,27 @@ RESPONSIVE FIXES
     .full-screen .standard-button {
         font-size: 14px;
         padding: 8px 5px;
+    }
+}
+
+ @media (min-width: 420px) {
+    #medicine .color-overlay {
+    min-height: 900px
+}
+
+    .intro-section .intro{margin-bottom: 35px;}
+    .intro-section{padding-top: 15%;}
+      #medicine form{
+        position: relative;
+        top: inherit;
+        width: auto;
+        left: auto;
+    }
+    #medicine .input-box{
+        height: 60px; 
+        font-size:1.4em;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
     }
 }

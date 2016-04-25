@@ -12,7 +12,7 @@ use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
-
+use Silex\Provider\RememberMeServiceProvider;
 /**
  * Base Config class.
  *
@@ -69,6 +69,13 @@ class LoadServices
                 'charset' => 'utf8'
             ),
         ));
+        
+        $this->app->register(new \Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider(), array(
+            'orm.proxies_dir'           => __DIR__ . '/cache/doctrine/proxy',
+             'orm.em.options' => array(
+                    'mappings' =>$this->app['orm.em.options.mappings.entities']
+                ),
+        ));
 
         /**
          * Session
@@ -86,13 +93,17 @@ class LoadServices
          */
         $this->app->register(new UrlGeneratorServiceProvider());
 
+
         /**
          * Form + validation
          *
          * @note Silex Native
          * @doc http://silex.sensiolabs.org/doc/providers/validator.html
          */
-        $this->app->register(new ValidatorServiceProvider());
+        $this->app->register(new ValidatorServiceProvider(), [
+            'validator.validator_service_ids' => []
+        ]);
+
 
         /**
          * Twig
@@ -147,27 +158,16 @@ class LoadServices
         * @note Please to define user.provider 
         * @doc http://silex.sensiolabs.org/doc/providers/security.html
         */
-        $this->app->register(new SecurityServiceProvider(), array(
-            'security.firewalls' => array(
-                'secured' => array(
-                    'pattern' => '^.*$',
-                    'anonymous' => true, // Indispensable car la zone de login se trouve dans la zone sécurisée (tout le front-office)
-                    'form' => array(
-                            'login_path' => $this->app['user.login_path'], 
-                            'check_path' => 'connexion',
-                            'default_target_path' => $this->app['user.default_target_path']),
-                    'logout' => array('logout_path' => $this->app['user.logout_path']), // url à appeler pour se déconnecter
-                    'users' =>  $this->app['user.provider'],
-                ),
-            ),
-            'security.access_rules' => array(
-                // ROLE_USER est défini arbitrairement, vous pouvez le remplacer par le nom que vous voulez
-                array('^/user/success', 'ROLE_USER'),
-                array('^/foo$', ''), // Cette url est accessible en mode non connecté
-            )
-    
-        ));
+        $this->app->register(new SecurityServiceProvider(), $this->app['service.security']);
 
-
+        /**
+        * Security Provider
+        *
+        * @note Silex Native
+        * @note Please to define user.provider 
+        * @doc http://silex.sensiolabs.org/doc/providers/remember_me.html
+        */
+        $this->app->register(new RememberMeServiceProvider());
+      
     }
 }

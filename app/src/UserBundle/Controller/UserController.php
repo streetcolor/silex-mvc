@@ -1,10 +1,15 @@
 <?php
 
-namespace Component\UserBundle\Controller;
+namespace Src\UserBundle\Controller;
+
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+use Silex\Provider\ValidatorServiceProvider;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Core\Controller;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * Deafault controller
@@ -14,46 +19,66 @@ use Core\Controller;
 class UserController extends Controller
 {
 
-    public function getIndex()
-    {
-    	return  $this->app['twig']->render('UserBundle/View/account.html');
-    }
+    public function getSignUp(Request $request){
 
-    public function getLogin()
-    {
+        $encoder = new MessageDigestPasswordEncoder();
 
-        //$encoder = $this->app['security.encoder_factory']->getEncoder($user);
-        // compute the encoded password for sebastien
-        //$password = $encoder->encodePassword('sebastien', $user->getSalt());
-        //print_r($user->getRoles());
-        //echo $password.' '.$user->getUsername();
+        $errors_signin = [];
+        $error_login = false;
+        $user = new \Entities\User();
 
+        $data = $request->request->all();
+        
+        if($data){
 
-        $user = "";
-        $token = $this->app['security.token_storage']->getToken();
+            $validator = $this->app['user.validator'];
+            $encoder = new MessageDigestPasswordEncoder();
 
-        if($this->app['security.authorization_checker']->isGranted('ROLE_USER')){
-            if (null !== $token) {
-                $user = $token->getUser()->getUsername();
+            $password = ($data['password']) ? $encoder->encodePassword($data['password'], '') : false;
+            $user->setLastname($data['lastname']);
+            $user->setFirstname($data['firstname']);
+            $user->setUsername($data['username']);
+            $user->setPassword($password);
+            
+            if (!$validator->validate($user, ['insert'])) {
+                $errors_signin = $validator->getErrors();
+            }
+            else{
+
+            
+                $this->app['orm.em']->persist($user);
+                $this->app['orm.em']->flush();    
+                
+                $User  = new \Symfony\Component\Security\Core\User\User($data['username'], $password, array('ROLE_USER'));
+                $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($User, $User->getPassword(), 'secured', array('ROLE_USER'));
+               
+                
+
+                $this->app['security.token_storage']->setToken($token);
+
+                return $this->app->redirect('/account');
+
             }
         }
-    	return  $this->app['twig']->render('UserBundle/View/login.html', array(
-            'username'      => $user,
-			'error'         => $this->app['security.last_error']($this->request),
-			'last_username' => $this->app['session']->get('_security.last_username'),
-	    ));
-    }
+        else{
 
-    public function getSuccess(){
+            $token = $this->app['security.token_storage']->getToken();
+            if($this->app['security.authorization_checker']->isGranted('ROLE_USER')){
+                if (null !== $token) {
+                    $user = $token->getUser()->getUsername();
+                }
         
-        $token = $this->app['security.token_storage']->getToken();
+            }
 
-
-        return  $this->app['twig']->render('UserBundle/View/account.html', array(
-            'username'      => $token->getUser()->getUsername()
-        ));
-
+           $error_login = $this->app['security.last_error']($this->request);
+  
+        }
+        return  $this->app['twig']->render(
+                    'UserBundle/View/signup.twig', 
+                    array(
+                        'errors_signin'=>$errors_signin, 
+                        'error_login'=>$error_login
+                    ));
 
     }
-
 }

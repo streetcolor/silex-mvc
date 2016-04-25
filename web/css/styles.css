@@ -22,6 +22,8 @@ body {
     text-align: center;
     overflow-x: hidden !important;
     margin: auto !important;
+    background: url(../img/ill/bg-1.jpg) no-repeat;
+
 }
 
 
@@ -81,6 +83,13 @@ li {
     list-style: none;
 }
 
+.margin-bottom-0{margin-bottom: 0;}
+.margin-bottom-10{margin-bottom: 10px;}
+.margin-top-10{margin-top: 10px;}
+.margin-bottom-20{margin-bottom: 20px;}
+.margin-top-20{margin-top: 20px;}
+
+.none{display: none;}
 /*---------------------------------------
    Typography                
 -----------------------------------------*/
@@ -240,29 +249,16 @@ h5 {
 -----------------------------------------*/
 
 /*---------------------------------------
-   SECTION:  HOME                 
+   HEADER:  NAVIGATION                 
 -----------------------------------------*/
 
-header {
-    background: url(../img/ill/bg-1.jpg) no-repeat center top fixed;
-    -webkit-background-size: cover;
-            background-size: cover;
-}
-
-header .color-overlay {
-    min-height: 900px;
-}
-
-header .full-screen {
-    width: 100%;
-    height: 100px;
-}
 
 /* TOP BAR WITH NAVIGATION */
 
+.navbar-brand, .close{padding: 15px}
+
 .sticky-navigation {
-  min-height: 60px;
-  background: #FFFFFF;
+  background: #454545;
   border: none;
   padding: 0 !important;
   margin-bottom: 0 !important;
@@ -275,7 +271,11 @@ header .full-screen {
   max-height: 30px;
   -webkit-backface-visibility: hidden;
 }
-
+.sticky-navigation .navbar-header {
+    background: #454545;
+    height: 50px;
+    margin-top:15px;
+}
 .sticky-navigation .main-navigation .current a {
   color: #000000 !important;
   position: relative;
@@ -294,8 +294,13 @@ header .full-screen {
 }
 
 .navbar-inverse .navbar-toggle {
-border-color: #313131;
-background: #313131;
+border:none;
+font-size: 28px; color:#999;
+margin: 0;
+background: transparent;
+height: 50px; 
+border-radius: 0;
+line-height: 1;
 }
 
 header .only-logo .navbar {
@@ -306,24 +311,52 @@ header .only-logo .navbar {
 header .only-logo .navbar .navbar-header {
     float: none;
 }
+#search {padding: 10px 0;}
+#search .input-group{ border-radius: 5px; position: initial;}
+#search .input-group-addon{background: #262626; border: none; border: none;    padding: 5px 12px; font-size: 18px; }
+#search .form-control{padding-left:0; height:30px; background: #262626; border: none;}
+
+#search  .typeahead.dropdown-menu{left: 0!important; right: 0!important; width: 100%!important; border-radius: 0;}
+#search  .typeahead.dropdown-menu li a strong{color: #6d7275; z-index: 1000;}
+#search  .dropdown-menu>.active>a, #medicine  .dropdown-menu>.active>a:hover, #medicine  .dropdown-menu>.active>a:focus{background-color:#1488CC!important; color: #FFF!important;}
+#search  .dropdown-menu>.active>a strong, #medicine  .dropdown-menu>.active>a:hover strong, #medicine  .dropdown-menu>.active>a:focus strong{ color: #FFF!important;}
+
+/*---------------------------------------
+   SECTION:  HOME                 
+-----------------------------------------*/
+
+#home {
+    background: url(../img/ill/bg-1.jpg) no-repeat center top fixed;
+    -webkit-background-size: cover;
+            background-size: cover;
+}
+
+#home .color-overlay {
+    min-height: 900px;
+}
+
+#home .full-screen {
+    width: 100%;
+    height: 100px;
+}
+
 
 /* INTRO */
 
-header .intro-section {
+.intro-section {
     margin: auto;
-    padding-top: 15%;
+    padding-top: 40px;
 }
 
-header .intro-section .intro {
-    color: #ffffff;
-    margin-bottom: 36px;
-}
-
-header .intro-section h5 {
+.intro-section .intro {
     color: #ffffff;
 }
 
-header .intro-section .buttons {
+.intro-section h5 {
+    color: #ffffff;
+}
+
+.intro-section .buttons {
     margin-top: 35px;
 }
 
@@ -668,14 +701,14 @@ header .intro-section .buttons {
 
 
 /*---------------------------------------
-   SECTION:  FOOTER                
+   SECTION:  CONTCAT                
 -----------------------------------------*/
 
-footer .contact-box {
+.contact-box {
     margin-bottom: 78px;
 }
 
-footer .contact-box .contact-button {
+.contact-box .contact-button {
     height: 80px;
     width: 80px;
     border-radius: 50%;
@@ -694,20 +727,20 @@ footer .contact-box .contact-button {
             background-clip: padding-box;
 }
 
-footer .contact-box .contact-button:hover {
+.contact-box .contact-button:hover {
     color: #ffffff;
 }
 
-footer .contact-box .expanded-contact-form {
+.contact-box .expanded-contact-form {
     margin-top: 40px;
 }
 
-footer .contact-box .expanded-contact-form .success,
-footer .contact-box .expanded-contact-form .error {
+.contact-box .expanded-contact-form .success,
+.contact-box .expanded-contact-form .error {
     display: none;
 }
 
-footer .contact-box .expanded-contact-form .input-box {
+.contact-box .expanded-contact-form .input-box {
     margin-bottom: 10px;
     margin-top: 10px;
     height: 50px;
@@ -715,16 +748,75 @@ footer .contact-box .expanded-contact-form .input-box {
             box-shadow: none;
 }
 
-footer .contact-box .expanded-contact-form .textarea-box {
+.contact-box .expanded-contact-form .textarea-box {
     margin-top: 20px;
     margin-bottom: 20px;
     -webkit-box-shadow: none;
             box-shadow: none;
 }
 
-footer .contact-box .expanded-contact-form .textarea-box:active {
+.contact-box .expanded-contact-form .textarea-box:active {
     color: #000;
 }
+
+/*---------------------------------------
+   SECTION:  MEDICINE                
+-----------------------------------------*/
+
+
+#medicine .col-md-8{padding: 5px;}
+#medicine .color-overlay {
+    min-height: 900px;
+    overflow: hidden;
+}
+
+#medicine .full-screen {
+    width: 100%;
+    height: 100px;
+}
+
+#medicine form{position: fixed;top: 30px;background: red;width: 100%;left: 0;z-index: 1000;}
+#medicine .input-box{
+    height: 45px;
+    font-size: 1.1em;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+#medicine  .typeahead.dropdown-menu{
+    -webkit-border-radius: 0;
+    padding: 0;
+    border: none;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    margin: 0;
+
+}
+#medicine  .typeahead.dropdown-menu li i{display: block; }
+#medicine  .typeahead.dropdown-menu li a{
+    padding: 0 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 50px; 
+    text-align: left; 
+    color: #999999;
+}
+#medicine ul li i{ position: absolute;  top:0; height: 42px;   width: 40px;   background: #1488CC;   display: block;   right: 0;  text-align: center; border-bottom: 2px dotted #FFF;}
+#medicine ul li i.first{     right: 40px; border-right: 2px dotted #FFF; }
+
+#medicine ul li i a{   color: #FFF;  }
+
+#medicine ul li{position:relative; color: #FFF; text-align: left; line-height: 40px; border-bottom:2px solid #1488CC;}
+
+#medicine ul li div p{white-space: nowrap; text-overflow: ellipsis; margin: 0; overflow: hidden;}
+#medicine ul li:last-child{border: none}
+#medicine ul li:last-child i{border-bottom: none}
+
+/*---------------------------------------
+   SECTION:  FOOTER                
+-----------------------------------------*/
 
 footer .social-icons {
     margin-top: 30px;
@@ -747,4 +839,17 @@ footer .copyright {
     padding-top: 10px;
     margin-bottom: 50px;
 }
-/* Localized */
+
+/*---------------------------------------
+   SECTION:  MODALE                
+-----------------------------------------*/
+.modal{position: absolute;}
+.modal-body{padding-bottom: 0;}
+.modal-body label{font-weight: normal;}
+.modal-content{top: 0; bottom: 0; left: 0; right: 0; position: absolute; border-radius: 0; border: 0}
+.modal-dialog {position: absolute;width: 100%;height: 100%;margin: 0; top:0; bottom:0;}
+.modal-header{height: 50px; padding: 0; background: #454545;}
+.modal-title{line-height: 50px; color: #FFF;}
+#edit-medicine{ background: url(../img/ill/bg-3.jpg);     background-size: cover;    height: 250px; filter:grayscale(0.1) brightness(0.7); -webkit-filter:grayscale(0.1) brightness(0.7)}
+#title{padding: 15px;top: 120px;font-size: 18px;font-weight: bold;color: #FFF;position: absolute;width: 100%;}
+.modal-header .close{margin-top: -2px;    position: absolute;    left: 0;}

@@ -1,14 +1,95 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{% block title '' %} - Artsper</title>
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Responsive Bootstrap App Landing Page Template">
+		<meta name="keywords" content="Kane, Bootstrap, Landing page, Template, App, Mobile">
+		<meta name="author" content="Mizanur Rahman">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<!-- SITE TITLE -->
+		<title>Kane - Responsive App Landing Page</title>
+
+		<!-- =========================
+		      FAV AND TOUCH ICONS  
+		============================== -->
+		<link rel="icon" href="img/ill/favicon.ico">
+		<link rel="apple-touch-icon" href="/img/ill/apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/img/ill/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/img/ill/apple-touch-icon-114x114.png">
+
+		<!-- =========================
+		     STYLESHEETS   
+		============================== -->
+		<!-- BOOTSTRAP -->
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/vendor/bootstrap.min.css">
+
+		<!-- FONT ICONS -->
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/assets/elegant-icons/style.css">
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/assets/app-icons/styles.css">
+		<!--[if lte IE 7]><script src="lte-ie7.js"></script><![endif]-->
+
+		<!-- WEB FONTS -->
+		<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,100italic,400,300italic' rel='stylesheet' type='text/css'>
+
+		<!-- CAROUSEL AND LIGHTBOX -->
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/vendor/owl.theme.css">
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/vendor/owl.carousel.css">
+
+		<!-- ANIMATIONS -->
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/vendor/animate.min.css">
+
+		<!-- CUSTOM STYLESHEETS -->
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/styles.css">
+
+		<!-- COLORS | CURRENTLY USED DIFFERENTLY TO SWITCH FOR DEMO. IN ORIGINAL FILE ALL COLORS LINK IS COMMENTED EXCEPT BLUE -->
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/colors/blue.css" title="blue">
+
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/vendor/jquery.growl.css" type="text/css" />
+
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/vendor/bootstrap-datepicker.css">
+
+		<!-- RESPONSIVE FIXES -->
+		<link rel="stylesheet" href="/~streetcolor/silex-mvc/web/css/responsive.css">
+
+		<!--[if lt IE 9]>
+					<script src="/~streetcolor/silex-mvc/web/js/html5shiv.js"></script>
+					<script src="/~streetcolor/silex-mvc/web/js/respond.min.js"></script>
+		<![endif]-->
+
+		<!-- JQUERY -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+        <title>{% block title '' %} </title>
+
     </head>
 
     <body>
 
         {% block content %}{% endblock %}
 
+
     </body>
+
+
+<script src="/~streetcolor/silex-mvc/web/js/vendor/bootstrap.min.js"></script>
+<script src="/~streetcolor/silex-mvc/web/js/vendor/owl.carousel.min.js"></script>
+<script src="/~streetcolor/silex-mvc/web/js/vendor/wow.min.js"></script>
+<script src="/~streetcolor/silex-mvc/web/js/vendor/retina-1.1.0.min.js"></script>
+<script src="/~streetcolor/silex-mvc/web/js/vendor/bootstrap3-typeahead.js"></script>
+<script src="/~streetcolor/silex-mvc/web/js/vendor/bootstrap-datepicker.js"></script>
+<script src="/~streetcolor/silex-mvc/web/js/vendor/jquery.growl.js"></script>
+<script src="/~streetcolor/silex-mvc/web/js/vendor/jquery.touchSwipe.js"></script>
+
+
+	<!--<script src="/~streetcolor/silex-mvc/web/js/custom.js"></script>-->
+
+    {% block scripts %}{% endblock %}
+
 
 
 </html>

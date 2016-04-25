@@ -1,6 +1,6 @@
 <?php
 
-namespace Component\DefaultBundle\Services;
+namespace Src\DefaultBundle\Services;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;

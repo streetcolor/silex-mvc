@@ -1,5 +1,5 @@
 <?php
-namespace Component\DefaultBundle;
+namespace Src\DefaultBundle;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -34,7 +34,7 @@ class DefaultBundle implements
     {
         /*Mount all events here*/
         $events = [
-                        new \Component\DefaultBundle\Services\EventServiceProvider
+                        new \Src\DefaultBundle\Services\EventServiceProvider
                     ];
         if(count($events)){
              $app->register(new \Core\InjectionEvent($events));
@@ -42,7 +42,7 @@ class DefaultBundle implements
        
        /*Mount all services here*/
         $services = [
-                        new \Component\DefaultBundle\Services\AcmeServiceProvider,
+                        new \Src\DefaultBundle\Services\AcmeServiceProvider,
                     ];
 
         if(count($services)){

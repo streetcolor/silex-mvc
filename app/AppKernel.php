@@ -24,6 +24,7 @@ class AppKernel extends Application
         $this->registerBundles();
         $this->configure();
         $this->mountRoutes();
+        $this->exception();
         
     }
 
@@ -74,10 +75,37 @@ class AppKernel extends Application
         });
     }
 
+    protected function exception()
+    {
+         $app = $this;
+        $app->error(function(\Doctrine\DBAL\DBALException $e, $code) use ($app) {
 
+            switch ($e->getErrorCode()) {
+               
+                case 1062:
+                    $message = 'This entry already exist';
+                    break;
+
+                default:
+                    $message = 'An MySql error has occured';
+                    break;
+            }
+
+            return $app->json([
+                'status' => 'error',
+                'code' => $code,
+                'error_sql_code'=>$e->getErrorCode(),
+                'error_sql_message'=>$message,
+                'message'=>$e->getMessage()
+            ]);
+        });
+
+    }
     private function registerBundles(){
-       
-        new Component\DefaultBundle\DefaultBundle($this, '/default');
-        new Component\UserBundle\UserBundle($this, '/user');
+        
+        new Src\HomeBundle\HomeBundle($this, '/');
+        new Src\UserBundle\UserBundle($this, '/user');
+        new Src\AccountBundle\AccountBundle($this, '/account');
+
     }
 }
